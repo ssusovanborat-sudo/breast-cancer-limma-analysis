@@ -1,0 +1,27 @@
+name: R-limma-pipeline CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+
+      - name: Install dependencies
+        run: |
+          Rscript -e 'install.packages("remotes", repos="https://cloud.r-project.org")'
+          Rscript -e 'remotes::install_cran(c("tidyverse","pheatmap","EnhancedVolcano"))'
+          Rscript -e 'remotes::install_bioc(c("GEOquery","limma","clusterProfiler","org.Hs.eg.db","hgu133plus2.db"))'
+
+      - name: Run pipeline smoke test
+        run: |
+          chmod +x tests/test_pipeline.R
+          Rscript tests/test_pipeline.R GSE15852

@@ -1,41 +1,88 @@
-Breast Cancer Differential Expression Analysis (R + limma)
+\# Breast Cancer Differential Expression Analysis (R + limma)
 
-This repository contains a complete, reproducible pipeline for analyzing breast cancer gene expression data using R, limma, and clusterProfiler.
-The workflow includes:
 
-GEO download
-Preprocessing & normalization
-Differential gene expression (limma)
-Volcano plot & heatmap
-Probe-to-gene symbol mapping (GPL570)
-GO / KEGG enrichment
-Export of results
 
-Repository Structure
+This project provides a complete, reproducible pipeline to analyze breast cancer gene expression data using R + limma + functional enrichment.
+
+
+
+\## Repository Structure
+
+
+
 breast-cancer-limma-analysis/
-├── scripts/                # R analysis scripts
-├── results/                # DEG tables, enrichment results
-├── figures/                # Volcano, heatmap
-├── docs/                   # Workflow diagrams
-└── README.md               # Project documentation
 
-How to Run
-Install packages:
-install.packages(c("tidyverse", "pheatmap", "EnhancedVolcano", "GEOquery"))
-BiocManager::install(c("limma", "org.Hs.eg.db", "hgu133plus2.db", "clusterProfiler"))
+├── scripts/ # Analysis scripts
+
+│ └── run\_limma\_pipeline.R
+
+├── tests/ # Smoke test for pipeline
+
+│ └── test\_pipeline.R
+
+├── docs/ # Documentation, workflow diagrams
+
+├── CONTRIBUTING.md # How to contribute
+
+├── CODE\_OF\_CONDUCT.md # Project code-of-conduct
+
+├── README.md # This file
+
+├── packages.R # Installs required R packages
 
 
-Run pipeline:
-source("scripts/run_limma_pipeline.R")
 
-Outputs
-DEG_results.csv
-GO_BP_enrichment.csv
-KEGG_enrichment.csv
-volcano.png
-heatmap_top50.png
-session_info.txt
 
-License
 
-This project is licensed under the MIT License.
+\## Quick Start — Run the Pipeline (Beginner Friendly)
+
+
+
+1\. \*\*Clone the repository\*\* (or download ZIP) to your computer.  
+
+2\. Open a terminal/command prompt and go to the project folder, e.g.,  
+
+
+
+cd /path/to/breast-cancer-limma-analysis
+
+3\. Install required R packages:  
+
+```r
+
+source("packages.R")
+
+Run the pipeline (default dataset GSE15852):
+
+Rscript scripts/run\_limma\_pipeline.R
+
+Output files will be written automatically under results/ and figures/.
+
+
+
+A log file will be created at results/run\_log.txt for run details.
+
+
+
+(Optional) Run the smoke test to verify everything works:
+
+Rscript tests/test\_pipeline.R
+
+
+
+For Advanced Use / Different Dataset
+
+
+
+You can run the pipeline on any GEO dataset by specifying the GEO ID:
+
+
+
+Rscript scripts/run\_limma\_pipeline.R GSEXXXXX
+
+License \& Contribution
+
+
+
+See LICENSE, CONTRIBUTING.md, and CODE\_OF\_CONDUCT.md for license and contribution guidelines.
+
